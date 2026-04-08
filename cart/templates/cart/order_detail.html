@@ -1,0 +1,112 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<section id="order-detail-section" style="min-height: 80vh; padding: 100px 20px 60px;">
+    <div class="container" style="max-width: 900px;">
+        
+        <!-- Back Button -->
+        <a href="{% url 'cart:order_history' %}" style="color: var(--text-medium); text-decoration: none; display: inline-block; margin-bottom: 20px;">
+            ← Back to Order History
+        </a>
+
+        <h2 style="color: var(--text-light); margin-bottom: 2rem;">Order #{{ order.id }}</h2>
+
+        <!-- Order Status -->
+        <div style="background-color: var(--bg-secondary); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid var(--neon-red);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <p style="color: var(--text-medium); margin-bottom: 5px;">Order Status</p>
+                    <p style="color: var(--neon-red); font-size: 1.3rem; font-weight: bold; text-transform: capitalize;">{{ order.status }}</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="color: var(--text-medium); margin-bottom: 5px;">Order Date</p>
+                    <p style="color: var(--text-light); font-weight: bold;">{{ order.created_at|date:"F d, Y" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 350px; gap: 20px;">
+            
+            <!-- Order Items -->
+            <div>
+                <div style="background-color: var(--bg-secondary); padding: 25px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="color: var(--text-light); margin-bottom: 20px; border-bottom: 2px solid var(--neon-red); padding-bottom: 10px;">Order Items</h3>
+                    
+                    {% for item in order.items.all %}
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background-color: var(--bg-dark); border-radius: 8px; margin-bottom: 15px;">
+                            <div style="flex: 1;">
+                                <h4 style="color: var(--text-light); margin-bottom: 5px;">{{ item.item.name }}</h4>
+                                <p style="color: var(--text-medium); font-size: 0.9rem;">Quantity: {{ item.quantity }}</p>
+                                <p style="color: var(--text-medium); font-size: 0.9rem;">Price: R{{ item.price }} each</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <p style="color: var(--text-light); font-size: 1.2rem; font-weight: bold;">R{{ item.get_total_price }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Shipping Address -->
+                <div style="background-color: var(--bg-secondary); padding: 25px; border-radius: 10px;">
+                    <h3 style="color: var(--text-light); margin-bottom: 20px; border-bottom: 2px solid var(--neon-red); padding-bottom: 10px;">Shipping Address</h3>
+                    <div style="color: var(--text-medium); line-height: 1.8;">
+                        <p style="color: var(--text-light); font-weight: bold; margin-bottom: 10px;">{{ order.full_name }}</p>
+                        <p>{{ order.address }}</p>
+                        <p>{{ order.city }}, {{ order.postal_code }}</p>
+                        <p>{{ order.province }}</p>
+                        <p style="margin-top: 10px;">
+                            <strong style="color: var(--text-light);">Email:</strong> {{ order.email }}
+                        </p>
+                        <p>
+                            <strong style="color: var(--text-light);">Phone:</strong> {{ order.phone }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div>
+                <div style="background-color: var(--bg-secondary); padding: 25px; border-radius: 10px; position: sticky; top: 120px;">
+                    <h3 style="color: var(--text-light); margin-bottom: 20px; border-bottom: 2px solid var(--neon-red); padding-bottom: 10px;">Order Summary</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: var(--text-medium);">Subtotal:</span>
+                            <span style="color: var(--text-light); font-weight: bold;">R{{ order.total_amount }}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: var(--text-medium);">Shipping:</span>
+                            <span style="color: var(--text-light); font-weight: bold;">FREE</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: var(--text-medium);">Payment Method:</span>
+                            <span style="color: var(--text-light); font-weight: bold; text-transform: uppercase;">{{ order.get_payment_method_display }}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="border-top: 2px solid var(--neon-red); padding-top: 15px; margin-top: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--text-light); font-size: 1.2rem; font-weight: bold;">Total:</span>
+                            <span style="color: var(--neon-red); font-size: 1.5rem; font-weight: bold;">R{{ order.total_amount }}</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 25px;">
+                        <a href="{% url 'core:shop' %}" class="btn" style="width: 100%; text-align: center; display: block;">
+                            Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+@media (max-width: 768px) {
+    div[style*="grid-template-columns: 1fr 350px"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,306 @@
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Home - BarcaUtdHub{% endblock %}
+
+{% block content %}
+
+<section id="home">
+        <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            </div>
+            
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'images/BarcaUtdHub.jpeg' %}" alt="Barcelona Fans">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/work.jpeg' %}" alt="Manchester United Stadium">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/united.jpg' %}" alt="Football Jersey">
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+
+        <div class="carousel-caption-custom">
+            <h1>Elevate Your <span>Pride</span></h1>
+            <p>Your Club. Your Colours. Your Legacy</p>
+            <a href="#contact" style="background-color: red" class="btn">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Featured Products Carousel -->
+    <section id="featured-carousel">
+        <div class="container">
+            <h2 style="font-size: 30px">Featured Products</h2>
+            
+            {% if items %}
+            <div id="productsCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for chunk in batched_items %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="row">
+                            {% for item in chunk %}
+                            <div class="col-md-4 product-carousel-item">
+                                <div class="product-card">
+                                    {% if item.image %}
+                                        <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                                    {% else %}
+                                        <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&h=400&fit=crop" alt="{{ item.name }}">
+                                    {% endif %}
+                                    <div class="product-info">
+                                        <h3>{{ item.name }}</h3>
+                                        {% if item.description %}
+                                            <p>{{ item.description|truncatewords:8 }}</p>
+                                        {% else %}
+                                            <p>{{ item.category.name }}</p>
+                                        {% endif %}
+                                        <div class="product-price">R{{ item.price|floatformat:2 }}</div>
+                                        <a href="{% url 'item:detail' item.pk %}" style="color: white" class="btn">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% if batched_items|length > 1 %}
+                <button class="carousel-control-prev" type="button" data-bs-target="#productsCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productsCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+                {% endif %}
+            </div>
+            {% else %}
+            <p style="text-align: center; color: var(--text-medium); padding: 3rem 0;">
+                No products available at the moment. Check back soon!
+            </p>
+            {% endif %}
+        </div>
+    </section>
+
+    
+
+    <section id="about">
+        <div class="container">
+             <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&h=800&fit=crop" alt="Football merchandise">
+            </div>
+            <div class="about-text">
+                <h2 style="color:white; margin-top: 20px; font-size: 30px">About BarcaUtdHub</h2>
+                <h3 style="color:white; margin-top: 20px">Where Two Legends Meet</h3>
+                <p style="margin-top: 10px">At BarcaUtdHub, we celebrate the passion, history, and glory of two of football's most iconic clubs: FC Barcelona and Manchester United. Whether you bleed Blaugrana or Red, we're your ultimate destination for authentic fan merchandise that lets you wear your colors with pride.</p>
+                <h3 style="color:white; margin-top: 20px">What We Offer</h3>
+                <p style="margin-top: 10px">From official jerseys and training gear to scarves, hats, and collectibles, we curate a premium selection of merchandise for true supporters. Every product we offer is chosen with care, ensuring you get quality items that honor the legacy of your club.</p>
+                 <a href="{% url 'core:shop' %}" style="color: white; margin-top: 20px" class="btn">View Our Merch</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2 style="color: white; font-size: 30px">Why Shop With Us</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3>Authentic Merchandise</h3>
+                    <p>100% official club merchandise with authenticity guarantees. Support your team with genuine products.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Fast Shipping</h3>
+                    <p>Express delivery options available worldwide. Get your gear in time for the next big match.</p>
+                </div>
+                 <div class="service-item">
+                    <h3>Secure Payments</h3>
+                    <p>Shop with confidence using our secure payment gateway and buyer protection.</p>
+                </div>
+                 <div class="service-item">
+                    <h3>Customer Support</h3>
+                    <p>Dedicated support team ready to help with your orders and inquiries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+<section id="reviews">
+    <div class="container">
+        <h2>What Our Customers Say</h2>
+        <p class="reviews-subtitle">Don't just take our word for it - hear from our satisfied customers</p>
+        
+        <div class="reviews-grid">
+            <!-- Review Card 1 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <span>TM</span>
+                        </div>
+                        <div>
+                            <h4 class="reviewer-name">Thabo Mbeki</h4>
+                            <div class="review-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Excellent service and quality products! The delivery was fast and everything arrived in perfect condition. Will definitely be ordering again."</p>
+                <p class="review-date">2 weeks ago</p>
+            </div>
+
+            <!-- Review Card 2 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <span>LN</span>
+                        </div>
+                        <div>
+                            <h4 class="reviewer-name">Lindiwe Nkosi</h4>
+                            <div class="review-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Amazing experience from start to finish. The customer service team was incredibly helpful and the products exceeded my expectations!"</p>
+                <p class="review-date">1 month ago</p>
+            </div>
+
+            <!-- Review Card 3 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <span>JS</span>
+                        </div>
+                        <div>
+                            <h4 class="reviewer-name">James Smith</h4>
+                            <div class="review-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">☆</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Great quality products at reasonable prices. Delivery took a bit longer than expected, but overall very satisfied with my purchase."</p>
+                <p class="review-date">3 weeks ago</p>
+            </div>
+
+            <!-- Review Card 4 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <span>ZD</span>
+                        </div>
+                        <div>
+                            <h4 class="reviewer-name">Zanele Dlamini</h4>
+                            <div class="review-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"I've been shopping here for months now and have never been disappointed. The quality is consistent and the prices are unbeatable!"</p>
+                <p class="review-date">1 week ago</p>
+            </div>
+
+            <!-- Review Card 5 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <span>MP</span>
+                        </div>
+                        <div>
+                            <h4 class="reviewer-name">Michael Peters</h4>
+                            <div class="review-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Top-notch service! The team went above and beyond to ensure I got exactly what I needed. Highly recommend to anyone looking for quality products."</p>
+                <p class="review-date">2 months ago</p>
+            </div>
+
+            <!-- Review Card 6 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <span>NK</span>
+                        </div>
+                        <div>
+                            <h4 class="reviewer-name">Nomsa Khumalo</h4>
+                            <div class="review-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Best online shopping experience I've had in Cape Town! Fast shipping, excellent packaging, and the products are exactly as described."</p>
+                <p class="review-date">3 weeks ago</p>
+            </div>
+        </div>
+
+        <!-- Review Stats -->
+        <div class="review-stats">
+            <div class="stat-item">
+                <div class="stat-icon">★</div>
+                <h3>4.8</h3>
+                <p>Average Rating</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">👥</div>
+                <h3>1,247</h3>
+                <p>Happy Customers</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">💯</div>
+                <h3>98%</h3>
+                <p>Would Recommend</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="search-results">
+    <div class="container">
+        <h2 style="font-size: 30px; color: white">Search Results</h2>
+        
+        <p style="padding-bottom:15px" class="search-info">
+            {% if query %}
+                Found {{ search_count }} result{{ search_count|pluralize }} for "<span class="search-query">{{ query }}</span>"
+            {% else %}
+                Enter a search term to find products
+            {% endif %}
+        </p>
+
+        {% if items %}
+        <div class="services-grid">
+            {% for item in items %}
+            <div class="service-item">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="product-image">
+                {% else %}
+                    <div class="product-image-placeholder">
+                        <span>No Image</span>
+                    </div>
+                {% endif %}
+                
+                <h3>{{ item.name }}</h3>
+                <p class="product-category">{{ item.category.name }}</p>
+                <p class="product-price">R{{ item.price }}</p>
+                <p class="product-description">{{ item.description|truncatewords:15 }}</p>
+                
+                <a href="{% url 'item:detail' item.id %}" style="color: white" class="btn">View Details</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <div class="empty-state">
+                <p class="empty-message">
+                    {% if query %}
+                        No products found matching "{{ query }}". Try a different search term.
+                    {% else %}
+                        Enter a search term in the search bar above to find products.
+                    {% endif %}
+                </p>
+                <a href="{% url 'core:shop' %}" class="btn">Browse All Products</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+    <!-- info section -->
+    <footer class="info_section layout_padding2">
+      <div class="container">
+        <div class="row">
+          <div class="">
+            <div class="logo_detail">
+              <div class="logo-box">
+                <a class="navbar-brand" href="index.html">
+                  <span style="font-weight:bold; font-size: 50px">BarcaUtdHub</span>
+                </a>
+              </div>
+              <p>Where Barca pride meets United passion -
+                bringing you bold, stylish fan gear that celebrates football
+                greatness.
+              </p>
+            </div>
+          </div>
+          <div class="">
+            <div class="address_box">
+              <h5 style="font-size: 20px">Address</h5>
+              <a href="#">
+                <i class="fa fa-map-marker" ></i>
+                passages of Lorem Ipsum available, but the majority have
+              </a>
+              <a href="#">
+                <i class="fa fa-phone" ></i>
+                (+27)625673289
+              </a>
+              <a href="#">
+                <i class="fa fa-envelope"></i>
+                BarcaUtdHub@gmail.com
+              </a>
+            </div>
+          </div>
+            <div class="social_box">
+              <a href="">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-instagram" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+{% endblock %}

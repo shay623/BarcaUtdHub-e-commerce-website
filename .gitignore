@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.pyo
+# *.sqlite3
+*.mo
+# db.sqlite3
+
+# Environment
+.env
+.env.*
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+
+# Django static/media files
+# /static/
+# /media/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Migrations (optional, if generated dynamically)
+**/migrations/*.pyc
+**/migrations/*.pyo
+**/migrations/__pycache__/
+# Uncomment the next line to ignore all migration files except __init__.py
+# **/migrations/[0-9][0-9]*.py
+
+# Coverage reports
+htmlcov/
+coverage.xml
+.tox/
+.nox/
+
+# Pytest cache
+.pytest_cache/
+
+# MyPy & Pylint
+.mypy_cache/
+.pylint.d/
+
+# VSCode settings
+.vscode/

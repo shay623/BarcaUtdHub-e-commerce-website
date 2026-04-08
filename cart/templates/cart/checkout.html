@@ -1,0 +1,120 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<section id="checkout-section" style="min-height: 80vh; padding: 100px 20px 60px; background-color: black">
+    <div class="container" style="max-width: 1200px;">
+        <h2 style="color: var(--text-light); margin-bottom: 3rem; font-size: 30px">Checkout</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="margin-bottom: 2rem;">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div style="display: grid; grid-template-columns: 1fr 400px; gap: 30px;">
+            
+            <!-- Checkout Form -->
+            <div class="checkout-form" style="background-color: var(--bg-secondary); padding: 30px; border-radius: 10px; ">
+                <h3 style="color: var(--neon-red); margin-bottom: 25px; border-bottom: 2px solid var(--neon-red); padding-bottom: 10px;">Shipping Information</h3>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="grid-column: 1 / -1; color: red;">
+                            {{ form.full_name }}
+                        </div>
+                        
+                        <div style="grid-column: 1 / -1;">
+                            {{ form.email }}
+                        </div>
+                        
+                        <div style="grid-column: 1 / -1; color: red">
+                            {{ form.phone }}
+                        </div>
+                        
+                        <div style="grid-column: 1 / -1; color: var(--text-medium);">
+                            {{ form.address }}
+                        </div>
+                        
+                        <div>
+                            {{ form.city }}
+                        </div>
+                        
+                        <div>
+                            {{ form.postal_code }}
+                        </div>
+                        
+                        <div style="grid-column: 1 / -1;">
+                            {{ form.province }}
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--neon-red); margin: 30px 0 20px; border-bottom: 2px solid var(--neon-red); padding-bottom: 10px;">Payment Method</h3>
+                    
+                    {{ form.payment_method }}
+
+                    <div style="margin-top: 30px; display: flex; gap: 15px;">
+                        <button type="submit" class="btn" style="flex: 1; color: white">Place Order</button>
+                        <a href="{% url 'cart:cart_detail' %}" class="btn" style="flex: 1; background-color: transparent; border: 2px solid var(--neon-red); color: var(--neon-red); text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+                            Back to Cart
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary" style="background-color: var(--bg-secondary); padding: 30px; border-radius: 10px; height: fit-content;">
+                <h3 style="color: var(--text-light); margin-bottom: 20px; border-bottom: 2px solid var(--neon-red); padding-bottom: 10px;">Order Summary</h3>
+                
+                <div style="max-height: 300px; overflow-y: auto; margin-bottom: 20px;">
+                    {% for cart_item in cart.items.all %}
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #444;">
+                            <div style="flex: 1;">
+                                <p style="color: var(--text-light); margin-bottom: 5px; font-weight: bold;">{{ cart_item.item.name }}</p>
+                                <p style="color: var(--text-medium); font-size: 0.9rem;">Qty: {{ cart_item.quantity }}</p>
+                            </div>
+                            <div>
+                                <p style="color: var(--text-light); font-weight: bold;">R{{ cart_item.get_total_price }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div style="border-top: 2px solid #444; padding-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: var(--text-medium);">Total Items:</span>
+                        <span style="color: var(--text-light); font-weight: bold;">{{ cart.get_total_items }}</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: var(--text-medium);">Subtotal:</span>
+                        <span style="color: var(--text-light); font-weight: bold;">R{{ cart.get_total_price }}</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: var(--text-medium);">Shipping:</span>
+                        <span style="color: var(--text-light); font-weight: bold;">FREE</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--neon-red);">
+                        <span style="color: var(--text-light); font-size: 1.3rem; font-weight: bold;">Total:</span>
+                        <span style="color: var(--neon-red); font-size: 1.5rem; font-weight: bold;">R{{ cart.get_total_price }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% comment %} <style>
+@media (max-width: 768px) {
+    div[style*="grid-template-columns: 1fr 400px"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style> {% endcomment %}
+{% endblock %}

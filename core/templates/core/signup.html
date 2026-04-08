@@ -1,0 +1,107 @@
+{% extends "core/base.html" %}
+
+{% block title %}Sign Up - BarcaUtdHub{% endblock %}
+
+{% block content %}
+<section id="signup" style="padding-top: 100px;">
+    <div class="container">
+        <div class="signup-container">
+            <h1>Sign Up</h1>
+
+            <form method="post" action=".">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label>Username</label>
+                    {{ form.username }}
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    {{ form.email }}
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    {{ form.password1 }}
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    {{ form.password2 }}
+                </div>
+
+                {% if form.errors %}
+                    <div class="error-message">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <button type="submit" style="color: white; background-color: red" class="btn btn-submit">Submit</button>
+            </form>
+
+            <div class="signup-footer">
+                <p>Already have an account? <a href="{% url 'core:login' %}">Log In</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- info section -->
+    <footer class="info_section layout_padding2">
+      <div class="container">
+        <div class="row">
+          <div class="">
+            <div class="logo_detail">
+              <div class="logo-box">
+                <a class="navbar-brand" href="index.html">
+                  <span style="font-weight:bold; font-size: 50px">BarcaUtdHub</span>
+                </a>
+              </div>
+              <p>Where Barca pride meets United passion -
+                bringing you bold, stylish fan gear that celebrates football
+                greatness.
+              </p>
+            </div>
+          </div>
+          <div class="">
+            <div class="address_box">
+              <h5 style="font-size: 20px">Address</h5>
+              <a href="#">
+                <i class="fa fa-map-marker" ></i>
+                passages of Lorem Ipsum available, but the majority have
+              </a>
+              <a href="#">
+                <i class="fa fa-phone" ></i>
+                (+27)625673289
+              </a>
+              <a href="#">
+                <i class="fa fa-envelope"></i>
+                BarcaUtdHub@gmail.com
+              </a>
+            </div>
+          </div>
+            <div class="social_box">
+              <a href="">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-instagram" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+{% endblock %}
+

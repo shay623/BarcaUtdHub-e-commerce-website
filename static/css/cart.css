@@ -1,0 +1,89 @@
+body{
+    background-color: black;
+}
+
+@media (max-width: 768px) {
+    div[style*="grid-template-columns: 1fr 400px"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.info_section {
+  background-color: #252525;
+  color: #ffffff;
+}
+
+.info_section a {
+  color: #ffffff;
+}
+
+.info_section h5 {
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.info_section .logo_detail,
+.info_section .address_box,
+.info_section .link_box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.info_section .logo_detail .navbar-brand {
+  margin-bottom: 15px;
+}
+
+.info_section .address_box a {
+  margin-bottom: 15px;
+}
+
+.info_section .info_form input {
+  width: 100%;
+  border: none;
+  height: 45px;
+  margin-bottom: 15px;
+  padding-left: 15px;
+  background-color: #eaeaea;
+  outline: none;
+  color: #101010;
+}
+
+.info_section .info_form button {
+  display: inline-block;
+  padding: 10px 45px;
+  background-color: #d33d33;
+  border: 1px solid #d33d33;
+  color: #ffffff;
+  border-radius: 0px;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.info_section .info_form button:hover {
+  background-color: transparent;
+  color: #d33d33;
+}
+
+.info_section .social_box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 25px;
+}
+
+.info_section .social_box a {
+  margin: 0 3px;
+  font-size: 22px;
+}
+
+.info_section .row{
+    gap:40px
+}

@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ item.name}}{% endblock %}
+
+{% block content %}
+<div class="detail-grid">
+    <div class="detail-image-col">
+        <img src="{{ item.image.url }}" class="detail-img" alt="{{ item.name }}">
+    </div>
+
+    <div class="detail-info-col">
+        <h1 class="detail-title">{{ item.name }}</h1>
+        <p class="detail-price"><strong>Price: </strong>R{{ item.price }}</p>
+    
+        {% if item.description %}
+            <p class="detail-desc">
+                <strong class="detail-desc-label">Description: </strong><br>
+                {{ item.description }}
+            </p>
+        {% endif %}
+
+        <div>
+        <a href="{% url 'cart:add_to_cart' item.id %}" style="color: white" class="btn">Add to Cart</a>
+        </div>
+    
+    </div>
+
+</div>
+{% endblock %}
+
+

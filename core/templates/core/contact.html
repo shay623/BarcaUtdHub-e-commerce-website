@@ -1,0 +1,128 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="contact" style="padding-top: 100px; min-height: 100vh;">
+    <div class="container">
+        <h2 style="color: white; font-size: 30px">Contact Us</h2>
+        <p style="text-align: center; color: var(--text-medium); margin-bottom: 3rem;">
+            Have questions? We'd love to hear from you!
+        </p>
+
+        <!-- Success/Error Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" style="max-width: 700px; margin: 0 auto 2rem auto; padding: 15px; border-radius: 8px; color: white;
+                     {% if message.tags == 'success' %}background-color: #10b981; color: white;{% else %}background-color: #ef4444; color: white;{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Contact Form -->
+        <form id="contact-form" method="POST" novalidate>
+            {% csrf_token %}
+            
+            <!-- Name Field -->
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}">Name *</label>
+                {{ form.name }}
+                <span class="error-message" id="name-error"></span>
+                {% if form.name.errors %}
+                    <span class="error-message">{{ form.name.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Email *</label>
+                {{ form.email }}
+                <span class="error-message" id="email-error"></span>
+                {% if form.email.errors %}
+                    <span class="error-message">{{ form.email.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <!-- Subject Field -->
+            <div class="form-group">
+                <label for="{{ form.subject.id_for_label }}">Subject *</label>
+                {{ form.subject }}
+                <span class="error-message" id="subject-error"></span>
+                {% if form.subject.errors %}
+                    <span class="error-message">{{ form.subject.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <!-- Message Field -->
+            <div class="form-group">
+                <label for="{{ form.message.id_for_label }}">Message *</label>
+                {{ form.message }}
+                <span class="error-message" id="message-error"></span>
+                {% if form.message.errors %}
+                    <span class="error-message">{{ form.message.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <button type="submit" style="color: white; background-color: red" class="btn">Send Message</button>
+        </form>
+
+        <!-- Contact Info -->
+    <!-- info section -->
+    <footer style="margin-top:20px" class="info_section layout_padding2">
+      <div class="container">
+        <div class="row">
+          <div class="">
+            <div class="logo_detail">
+              <div class="logo-box">
+                <a class="navbar-brand" href="index.html">
+                  <span style="font-weight:bold; font-size: 50px">BarcaUtdHub</span>
+                </a>
+              </div>
+              <p>Where Barca pride meets United passion -
+                bringing you bold, stylish fan gear that celebrates football
+                greatness.
+              </p>
+            </div>
+          </div>
+          <div class="">
+            <div class="address_box">
+              <h5 style="font-size: 20px">Address</h5>
+              <a href="#">
+                <i class="fa fa-map-marker" ></i>
+                passages of Lorem Ipsum available, but the majority have
+              </a>
+              <a href="#">
+                <i class="fa fa-phone" ></i>
+                (+27)625673289
+              </a>
+              <a href="#">
+                <i class="fa fa-envelope"></i>
+                BarcaUtdHub@gmail.com
+              </a>
+            </div>
+          </div>
+            <div class="social_box">
+              <a href="">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-instagram" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+{% endblock %}
+
+
+
+
+
+

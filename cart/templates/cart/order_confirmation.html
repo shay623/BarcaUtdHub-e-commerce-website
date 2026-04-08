@@ -1,0 +1,68 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<section id="confirmation-section" style="min-height: 80vh; padding: 100px 20px 60px;">
+    <div class="container" style="max-width: 800px; text-align: center;">
+        
+        <!-- Success Icon -->
+        <div style="margin-bottom: 30px;">
+            <div style="width: 100px; height: 100px; margin: 0 auto; background-color: var(--bg-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid var(--neon-red);">
+                <span style="color: var(--neon-red); font-size: 3rem;">✓</span>
+            </div>
+        </div>
+
+        <h2 style="color: var(--text-light); margin-bottom: 1rem;">Order Confirmed!</h2>
+        <p style="color: var(--text-medium); font-size: 1.1rem; margin-bottom: 3rem;">Thank you for your order. We'll send you a confirmation email shortly.</p>
+
+        <!-- Order Details -->
+        <div style="background-color: var(--bg-secondary); padding: 30px; border-radius: 10px; text-align: left; margin-bottom: 2rem;">
+            <h3 style="color: var(--neon-red); margin-bottom: 20px; border-bottom: 2px solid var(--neon-red); padding-bottom: 10px;">Order Details</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                <div>
+                    <p style="color: var(--text-medium); margin-bottom: 5px;">Order Number:</p>
+                    <p style="color: var(--text-light); font-weight: bold; font-size: 1.1rem;">#{{ order.id }}</p>
+                </div>
+                <div>
+                    <p style="color: var(--text-medium); margin-bottom: 5px;">Order Date:</p>
+                    <p style="color: var(--text-light); font-weight: bold;">{{ order.created_at|date:"F d, Y" }}</p>
+                </div>
+                <div>
+                    <p style="color: var(--text-medium); margin-bottom: 5px;">Status:</p>
+                    <p style="color: var(--neon-red); font-weight: bold; text-transform: capitalize;">{{ order.status }}</p>
+                </div>
+                <div>
+                    <p style="color: var(--text-medium); margin-bottom: 5px;">Total Amount:</p>
+                    <p style="color: var(--text-light); font-weight: bold; font-size: 1.1rem;">R{{ order.total_amount }}</p>
+                </div>
+            </div>
+
+            <h4 style="color: var(--text-light); margin: 25px 0 15px;">Shipping Address</h4>
+            <div style="color: var(--text-medium); line-height: 1.6;">
+                <p>{{ order.full_name }}</p>
+                <p>{{ order.address }}</p>
+                <p>{{ order.city }}, {{ order.postal_code }}</p>
+                <p>{{ order.province }}</p>
+                <p>Phone: {{ order.phone }}</p>
+            </div>
+
+            <h4 style="color: var(--text-light); margin: 25px 0 15px;">Order Items</h4>
+            {% for item in order.items.all %}
+                <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #444;">
+                    <div>
+                        <p style="color: var(--text-light); font-weight: bold;">{{ item.item.name }}</p>
+                        <p style="color: var(--text-medium); font-size: 0.9rem;">Quantity: {{ item.quantity }} × R{{ item.price }}</p>
+                    </div>
+                    <p style="color: var(--text-light); font-weight: bold;">R{{ item.get_total_price }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'cart:order_history' %}" class="btn">View Order History</a>
+            <a href="{% url 'core:shop' %}" class="btn" style="background-color: transparent; border: 2px solid var(--neon-red); color: var(--neon-red);">Continue Shopping</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
